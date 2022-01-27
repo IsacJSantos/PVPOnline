@@ -1,8 +1,9 @@
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using OnlyOneGameDev.Utils;
 
-namespace Network
+namespace OnlyOneGameDev.Network
 {
     public class Launcher : MonoBehaviourPunCallbacks
     {
@@ -45,7 +46,7 @@ namespace Network
             Debug.Log("<color=yellow>Error on try join a random room. Creating one...</color>");
             PhotonNetwork.CreateRoom(null, new RoomOptions
             {
-                MaxPlayers = 4,
+                MaxPlayers = GameData.MAX_PLAYERS_PER_ROOM,
                 CleanupCacheOnLeave = true
             });
         }
