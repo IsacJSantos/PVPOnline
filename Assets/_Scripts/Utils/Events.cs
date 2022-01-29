@@ -10,6 +10,9 @@ namespace OnlyOneGameDev.Utils
         public static IntEvent OnPlayerNumberLeftRoom;
         #endregion
 
+        #region Lobby
+        public static SimpleEvent OnStartMatch;
+        #endregion
 
 
 

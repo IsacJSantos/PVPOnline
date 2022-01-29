@@ -44,7 +44,7 @@ namespace OnlyOneGameDev.Network
         public override void OnJoinedRoom()
         {
             Debug.Log("<color=yellow>Joined to a room.</color>");
-            PhotonNetwork.LoadLevel(2);
+            PhotonNetwork.LoadLevel(GameData.LOBBY_SCENE);
         }
         public override void OnJoinRandomFailed(short returnCode, string message)
         {

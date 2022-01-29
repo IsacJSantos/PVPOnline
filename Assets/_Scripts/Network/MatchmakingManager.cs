@@ -11,11 +11,25 @@ namespace OnlyOneGameDev.Network
         protected override void Awake()
         {
             base.Awake();
+
+            Events.OnStartMatch += StartMatch;
+
             DontDestroyOnLoad(gameObject);
             PhotonNetwork.AddCallbackTarget(this);
         }
 
+        private void OnDestroy()
+        {
+            Events.OnStartMatch -= StartMatch;
+        }
+
         #region Public Methods
+        public void StartMatch()
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.LoadLevel(GameData.GAMEPLAY_SCENE);
+        }
+
         public int GetTotalPlayers()
         {
             return PhotonNetwork.CurrentRoom.PlayerCount;
