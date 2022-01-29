@@ -38,7 +38,7 @@ namespace OnlyOneGameDev.Lobby
             if (PhotonNetwork.CurrentRoom.PlayerCount >= GameData.MIN_PLAYERS_TO_PLAY)
             {
                 Debug.Log("<color=yellow>Starting match...</color>");
-                PhotonNetwork.LoadLevel(3);
+                Events.OnStartMatch?.Invoke();
             }
 
         }
