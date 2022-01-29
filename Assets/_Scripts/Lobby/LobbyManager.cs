@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using OnlyOneGameDev.Utils;
 using OnlyOneGameDev.Network;
-using Photon.Pun;
+
 
 namespace OnlyOneGameDev.Lobby
 {
@@ -16,48 +16,44 @@ namespace OnlyOneGameDev.Lobby
 
         private void Awake()
         {
-            Events.OnPlayerNumberEnteredRoom += OnPlayerEntered;
-            Events.OnPlayerNumberLeftRoom += OnPlayerLeft;
+            Events.OnPlayerEnteredRoom += OnPlayerEntered;
+            Events.OnPlayerLeftRoom += OnPlayerLeft;
         }
         private void Start()
         {
-
-
-            SetPlayersSlot();
+            SetPlayersCount();
         }
         private void OnDestroy()
         {
-            Events.OnPlayerNumberEnteredRoom -= OnPlayerEntered;
-            Events.OnPlayerNumberLeftRoom -= OnPlayerLeft;
+            Events.OnPlayerEnteredRoom -= OnPlayerEntered;
+            Events.OnPlayerLeftRoom -= OnPlayerLeft;
         }
 
+ 
         #region Private Methods
-        void OnPlayerEntered(int number)
-        {
-            int index = number - 1;
-            if (index < 0 || index >= _playerSlots.Length) return;
 
-            _playerSlots[index].color = Color.green;
+        void OnPlayerEntered(string nickName)
+        {
+            SetPlayersCount();
         }
 
-        void OnPlayerLeft(int number)
+        void OnPlayerLeft(string nickName)
         {
-            int index = number - 1;
-            if (index < 0 || index >= _playerSlots.Length) return;
-
-            _playerSlots[index].color = Color.white;
+            SetPlayersCount();
         }
 
-        void SetPlayersSlot()
+        void SetPlayersCount()
         {
-            for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
-            {
-                if (i >= 0 || i < _playerSlots.Length)
-                {
-                    _playerSlots[i].color = Color.green;
-                }
-            }
+            int totalPlayers = MatchmakingManager.Instance.GetTotalPlayers();
+            _playerCount.text = $"{totalPlayers}/{GameData.MAX_PLAYERS_PER_ROOM}";
+
+            if (totalPlayers >= GameData.MIN_PLAYERS_TO_PLAY)
+                _playerCount.color = Color.green;
+            else
+                _playerCount.color = Color.white;
+
         }
+
         #endregion
     }
 }

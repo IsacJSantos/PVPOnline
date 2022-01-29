@@ -8,12 +8,14 @@ namespace OnlyOneGameDev.Network
 {
     public class MatchmakingManager : Singleton<MatchmakingManager>, IInRoomCallbacks
     {
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             DontDestroyOnLoad(gameObject);
             PhotonNetwork.AddCallbackTarget(this);
         }
 
+        #region Public Methods
         public int GetTotalPlayers()
         {
             return PhotonNetwork.CurrentRoom.PlayerCount;
@@ -22,6 +24,10 @@ namespace OnlyOneGameDev.Network
         {
             return PhotonNetwork.LocalPlayer.ActorNumber;
         }
+
+        #endregion
+
+
         #region Photon Methods
         public void OnMasterClientSwitched(Player newMasterClient)
         {
@@ -30,14 +36,14 @@ namespace OnlyOneGameDev.Network
 
         public void OnPlayerEnteredRoom(Player newPlayer)
         {
-            Debug.Log($"<color=green>{newPlayer.NickName} joined in this room</color>");
+            Debug.Log($"<color=green>{newPlayer.NickName} joined in this room. Player number: {newPlayer.ActorNumber}</color>");
             Events.OnPlayerEnteredRoom?.Invoke(newPlayer.NickName);
             Events.OnPlayerNumberEnteredRoom?.Invoke(newPlayer.ActorNumber);
         }
 
         public void OnPlayerLeftRoom(Player otherPlayer)
         {
-            Debug.Log($"<color=green>{otherPlayer.NickName} left this room</color>");
+            Debug.Log($"<color=green>{otherPlayer.NickName} left this room. Player number: {otherPlayer.ActorNumber}</color>");
             Events.OnPlayerLeftRoom?.Invoke(otherPlayer.NickName);
             Events.OnPlayerNumberLeftRoom?.Invoke(otherPlayer.ActorNumber);
         }

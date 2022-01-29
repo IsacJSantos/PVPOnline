@@ -1,19 +1,23 @@
 using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour
+namespace OnlyOneGameDev.Utils
 {
-    public static T Instance { get => _instance; }
-    private static T _instance;
-    private void Awake()
+    public class Singleton<T> : MonoBehaviour
     {
-        if (_instance == null)
+        [SerializeField] public static T Instance { get => _instance; }
+        private static T _instance;
+        protected virtual void Awake()
         {
-            _instance = this.GetComponent<T>();
+            if (_instance == null)
+            {
+                _instance = this.GetComponent<T>();
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
         }
-        else
-        {
-            Destroy(gameObject);
-        }
-              
     }
 }
+
