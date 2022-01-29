@@ -3,6 +3,7 @@ using Photon.Pun;
 using UnityEngine;
 using OnlyOneGameDev.Utils;
 using ExitGames.Client.Photon;
+using UnityEngine.SceneManagement;
 
 namespace OnlyOneGameDev.Network
 {
@@ -30,6 +31,11 @@ namespace OnlyOneGameDev.Network
             PhotonNetwork.LoadLevel(GameData.GAMEPLAY_SCENE);
         }
 
+        public void LeftMatch()
+        {
+            PhotonNetwork.Disconnect();
+            SceneManager.LoadScene(GameData.MENU_SCENE);
+        }
         public int GetTotalPlayers()
         {
             return PhotonNetwork.CurrentRoom.PlayerCount;
