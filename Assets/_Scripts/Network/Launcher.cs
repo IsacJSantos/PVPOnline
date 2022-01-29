@@ -41,6 +41,11 @@ namespace OnlyOneGameDev.Network
             PhotonNetwork.JoinRandomRoom();
         }
 
+        public override void OnJoinedRoom()
+        {
+            Debug.Log("<color=yellow>Joined to a room.</color>");
+            PhotonNetwork.LoadLevel(2);
+        }
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
             Debug.Log("<color=yellow>Error on try join a random room. Creating one...</color>");
