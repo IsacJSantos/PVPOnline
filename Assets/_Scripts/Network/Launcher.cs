@@ -30,11 +30,13 @@ namespace OnlyOneGameDev.Network
         #endregion
 
         #region Private Methods
-
-
+       
         #endregion
 
+
         #region Photon Methods
+
+       
         public override void OnConnectedToMaster()
         {
             Debug.Log("<color=yellow>Connected to master. Connecting to a random room...</color>");
@@ -43,8 +45,8 @@ namespace OnlyOneGameDev.Network
 
         public override void OnJoinedRoom()
         {
-            Debug.Log("<color=yellow>Joined to a room.</color>");
-            PhotonNetwork.LoadLevel(GameData.LOBBY_SCENE);
+            Debug.Log("<color=yellow>Joined to a room.</color>");        
+            PhotonNetwork.LoadLevel(GameData.LOBBY_SCENE);          
         }
         public override void OnJoinRandomFailed(short returnCode, string message)
         {

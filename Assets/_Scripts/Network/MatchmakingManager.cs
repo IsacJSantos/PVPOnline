@@ -4,11 +4,14 @@ using UnityEngine;
 using OnlyOneGameDev.Utils;
 using ExitGames.Client.Photon;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 namespace OnlyOneGameDev.Network
 {
-    public class MatchmakingManager : Singleton<MatchmakingManager>, IInRoomCallbacks
+    public class MatchmakingManager : Singleton<MatchmakingManager>, IInRoomCallbacks, IMatchmakingCallbacks
     {
+        public int PlayerUID;
+
         protected override void Awake()
         {
             base.Awake();
@@ -47,6 +50,15 @@ namespace OnlyOneGameDev.Network
 
         #endregion
 
+        #region Private Methods
+        void SetPlayerUID()
+        {
+            PlayerUID = PhotonNetwork.CurrentRoom.PlayerCount - 1;
+            Debug.Log($"<color=green>Player {PlayerUID}.</color>");
+        }
+        #endregion
+
+
 
         #region Photon Methods
         public void OnMasterClientSwitched(Player newMasterClient)
@@ -77,6 +89,44 @@ namespace OnlyOneGameDev.Network
         {
             Debug.Log($"<color=yellow>OnRoomPropertiesUpdate</color>");
         }
+
+
+        public void OnFriendListUpdate(List<FriendInfo> friendList)
+        {
+
+        }
+
+        public void OnCreatedRoom()
+        {
+
+        }
+
+        public void OnCreateRoomFailed(short returnCode, string message)
+        {
+
+        }
+
+        public void OnJoinedRoom()
+        {
+            Debug.Log($"<color=yellow>(Matchmaking) OnJoinedRoom</color>");
+            SetPlayerUID();
+        }
+
+        public void OnJoinRoomFailed(short returnCode, string message)
+        {
+
+        }
+
+        public void OnJoinRandomFailed(short returnCode, string message)
+        {
+
+        }
+
+        public void OnLeftRoom()
+        {
+
+        }
+
         #endregion
 
     }
