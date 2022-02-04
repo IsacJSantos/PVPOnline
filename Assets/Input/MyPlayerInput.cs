@@ -35,6 +35,15 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": ""NormalizeVector2"",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""85fc8cac-b45a-4aa2-8276-f05ee8dea396"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -103,6 +112,17 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ccd03ca0-fbb0-4acc-a165-8875c46d2276"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -112,6 +132,7 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
         // CharacterController
         m_CharacterController = asset.FindActionMap("CharacterController", throwIfNotFound: true);
         m_CharacterController_Move = m_CharacterController.FindAction("Move", throwIfNotFound: true);
+        m_CharacterController_Rotate = m_CharacterController.FindAction("Rotate", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -172,11 +193,13 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_CharacterController;
     private ICharacterControllerActions m_CharacterControllerActionsCallbackInterface;
     private readonly InputAction m_CharacterController_Move;
+    private readonly InputAction m_CharacterController_Rotate;
     public struct CharacterControllerActions
     {
         private @MyPlayerInput m_Wrapper;
         public CharacterControllerActions(@MyPlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_CharacterController_Move;
+        public InputAction @Rotate => m_Wrapper.m_CharacterController_Rotate;
         public InputActionMap Get() { return m_Wrapper.m_CharacterController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -189,6 +212,9 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
                 @Move.started -= m_Wrapper.m_CharacterControllerActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_CharacterControllerActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_CharacterControllerActionsCallbackInterface.OnMove;
+                @Rotate.started -= m_Wrapper.m_CharacterControllerActionsCallbackInterface.OnRotate;
+                @Rotate.performed -= m_Wrapper.m_CharacterControllerActionsCallbackInterface.OnRotate;
+                @Rotate.canceled -= m_Wrapper.m_CharacterControllerActionsCallbackInterface.OnRotate;
             }
             m_Wrapper.m_CharacterControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -196,6 +222,9 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Rotate.started += instance.OnRotate;
+                @Rotate.performed += instance.OnRotate;
+                @Rotate.canceled += instance.OnRotate;
             }
         }
     }
@@ -203,5 +232,6 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
     public interface ICharacterControllerActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
     }
 }
