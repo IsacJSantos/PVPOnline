@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     Vector2 _currentMovementInput;
     Vector3 _currentMoviment;
     bool _isMovementPressed;
-   
+
     Quaternion rotation;
     Vector3 relativePos;
     private void OnEnable()
@@ -32,24 +32,25 @@ public class PlayerController : MonoBehaviour
         _inputActions = new MyPlayerInput();
         _inputActions.CharacterController.Move.performed += SetMove;
         _inputActions.CharacterController.Move.canceled += SetMove;
-        _inputActions.CharacterController.Rotate.performed += SetLookRotation;
     }
     private void Update()
     {
-        if (_isMovementPressed) 
+        SetLookRotation();
+
+        if (_isMovementPressed)
         {
             Move();
             Rotate();
         }
-           
+
     }
 
     private void Move()
-    {
+    {     
         Vector3 motion = Vector3.zero;
         motion += _playerTransform.forward * _currentMoviment.z * _moveSpeed * Time.deltaTime;
         motion += _playerTransform.right * _currentMoviment.x * _moveSpeed * Time.deltaTime;
-        _characterController.Move(motion);
+        _characterController.Move(motion);       
     }
 
     private void Rotate()
@@ -58,9 +59,9 @@ public class PlayerController : MonoBehaviour
         rotation = Quaternion.LookRotation(relativePos, Vector3.up);
         _playerTransform.rotation = rotation;
     }
+
     void SetMove(InputAction.CallbackContext context)
     {
-       // Debug.Log(context.ReadValue<Vector2>());
         _currentMovementInput = context.ReadValue<Vector2>();
         _currentMoviment.x = _currentMovementInput.x;
         _currentMoviment.z = _currentMovementInput.y;
@@ -69,19 +70,18 @@ public class PlayerController : MonoBehaviour
         _playerAnimator.SetInteger("YValue", _currentMoviment.z == 0 ? 0 : (int)Mathf.Sign(_currentMoviment.z));
         _playerAnimator.SetInteger("XValue", _currentMoviment.x == 0 ? 0 : (int)Mathf.Sign(_currentMoviment.x));
 
-
     }
-    void SetLookRotation(InputAction.CallbackContext context)
+    void SetLookRotation()
     {
 
-        Vector2 mousePos = context.ReadValue<Vector2>();
+        Vector2 mousePos = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, 100))
         {
             _look.position = hit.point;
-                    
+
         }
 
     }

@@ -13,15 +13,6 @@
                     "processors": "NormalizeVector2",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Rotate",
-                    "type": "Value",
-                    "id": "85fc8cac-b45a-4aa2-8276-f05ee8dea396",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -90,17 +81,6 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "ccd03ca0-fbb0-4acc-a165-8875c46d2276",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Rotate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         }
