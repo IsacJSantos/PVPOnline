@@ -105,6 +105,34 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""HUDController"",
+            ""id"": ""e66428ef-8ccd-454c-a248-5e3467df034e"",
+            ""actions"": [
+                {
+                    ""name"": ""ToggleInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""932eab82-73f5-4464-91e9-606089a7a801"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c06aeedd-b030-4c3f-8580-4a6e07aa7388"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -112,6 +140,9 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
         // CharacterController
         m_CharacterController = asset.FindActionMap("CharacterController", throwIfNotFound: true);
         m_CharacterController_Move = m_CharacterController.FindAction("Move", throwIfNotFound: true);
+        // HUDController
+        m_HUDController = asset.FindActionMap("HUDController", throwIfNotFound: true);
+        m_HUDController_ToggleInventory = m_HUDController.FindAction("ToggleInventory", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -200,8 +231,45 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public CharacterControllerActions @CharacterController => new CharacterControllerActions(this);
+
+    // HUDController
+    private readonly InputActionMap m_HUDController;
+    private IHUDControllerActions m_HUDControllerActionsCallbackInterface;
+    private readonly InputAction m_HUDController_ToggleInventory;
+    public struct HUDControllerActions
+    {
+        private @MyPlayerInput m_Wrapper;
+        public HUDControllerActions(@MyPlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ToggleInventory => m_Wrapper.m_HUDController_ToggleInventory;
+        public InputActionMap Get() { return m_Wrapper.m_HUDController; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(HUDControllerActions set) { return set.Get(); }
+        public void SetCallbacks(IHUDControllerActions instance)
+        {
+            if (m_Wrapper.m_HUDControllerActionsCallbackInterface != null)
+            {
+                @ToggleInventory.started -= m_Wrapper.m_HUDControllerActionsCallbackInterface.OnToggleInventory;
+                @ToggleInventory.performed -= m_Wrapper.m_HUDControllerActionsCallbackInterface.OnToggleInventory;
+                @ToggleInventory.canceled -= m_Wrapper.m_HUDControllerActionsCallbackInterface.OnToggleInventory;
+            }
+            m_Wrapper.m_HUDControllerActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @ToggleInventory.started += instance.OnToggleInventory;
+                @ToggleInventory.performed += instance.OnToggleInventory;
+                @ToggleInventory.canceled += instance.OnToggleInventory;
+            }
+        }
+    }
+    public HUDControllerActions @HUDController => new HUDControllerActions(this);
     public interface ICharacterControllerActions
     {
         void OnMove(InputAction.CallbackContext context);
+    }
+    public interface IHUDControllerActions
+    {
+        void OnToggleInventory(InputAction.CallbackContext context);
     }
 }
