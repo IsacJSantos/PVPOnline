@@ -2478,7 +2478,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7829123554498247454, guid: 7249834cdcab38d439afcfeb4d5597bc, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7829123554558003676, guid: 7249834cdcab38d439afcfeb4d5597bc, type: 3}
       propertyPath: tempItemSelected
