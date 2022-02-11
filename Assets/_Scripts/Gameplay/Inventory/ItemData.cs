@@ -6,6 +6,7 @@ using UnityEngine;
 public class ItemData : ScriptableObject
 {
     public string Name;
-    public int itemId;
+    public int ItemId;
+    public float ItemDamage;
     public Sprite ItemIcon;
 }

@@ -1,31 +1,34 @@
 using UnityEngine;
-
-public class InventoryManager : MonoBehaviour
+namespace BraveHunter.Gameplay 
 {
-    public ItemData tempItemSelected;
-    public ItemData tempItemSelected2;
-    public Slot[] Slots;
-
-    private void Update()
+    public class InventoryManager : MonoBehaviour
     {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-          
-            AddItemToInventory(tempItemSelected);
-        }
-        else if (Input.GetKeyDown(KeyCode.J))
-        {
-       
-            AddItemToInventory(tempItemSelected2);
-        }
-    }
+        public ItemData tempItemSelected;
+        public ItemData tempItemSelected2;
+        public Slot[] Slots;
 
-    void AddItemToInventory(ItemData itemData)
-    {
-      
-        for (int i = 0; i < Slots.Length; i++)
+        private void Update()
         {
-            if (Slots[i].EnterItem(itemData)) break;
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+
+                AddItemToInventory(tempItemSelected);
+            }
+            else if (Input.GetKeyDown(KeyCode.J))
+            {
+
+                AddItemToInventory(tempItemSelected2);
+            }
+        }
+
+        void AddItemToInventory(ItemData itemData)
+        {
+
+            for (int i = 0; i < Slots.Length; i++)
+            {
+                if (Slots[i].EnterItem(itemData)) break;
+            }
         }
     }
 }
+

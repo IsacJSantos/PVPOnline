@@ -1,31 +1,34 @@
 using UnityEngine.UI;
 using UnityEngine;
 
-public class Slot : MonoBehaviour
+namespace BraveHunter.Gameplay
 {
-   
-    [SerializeField] Image _itemImage;
-
-    [SerializeField] ItemData _itemData;
-
-    private void Start()
+    public class Slot : MonoBehaviour
     {
-        _itemImage.enabled = false;  
-    }
 
-    public bool EnterItem(ItemData itemData)
-    {
-        if (_itemData == null)
+        [SerializeField] Image _itemImage;
+
+        [SerializeField] ItemData _itemData;
+
+        private void Start()
         {
-            _itemData = itemData;
-            _itemImage.sprite = itemData.ItemIcon;
-            _itemImage.enabled = true;
-            return true;
+            _itemImage.enabled = false;
         }
-        else
+
+        public bool EnterItem(ItemData itemData)
         {
-            return false;
+            if (_itemData == null)
+            {
+                _itemData = itemData;
+                _itemImage.sprite = itemData.ItemIcon;
+                _itemImage.enabled = true;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
-        
     }
 }

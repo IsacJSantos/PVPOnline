@@ -1,6 +1,6 @@
 using Photon.Pun;
 using UnityEngine;
-using OnlyOneGameDev.Network;
+using BraveHunter.Network;
 public class PlayerSpawn : MonoBehaviour
 {
     [SerializeField] Transform[] _spawnPoints;

@@ -1,4 +1,4 @@
-namespace OnlyOneGameDev.Utils
+namespace BraveHunter.Utils
 {
     public class GameData
     {
