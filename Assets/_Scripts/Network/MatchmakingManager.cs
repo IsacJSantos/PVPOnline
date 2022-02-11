@@ -1,12 +1,12 @@
 using Photon.Realtime;
 using Photon.Pun;
 using UnityEngine;
-using OnlyOneGameDev.Utils;
+using BraveHunter.Utils;
 using ExitGames.Client.Photon;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
-namespace OnlyOneGameDev.Network
+namespace BraveHunter.Network
 {
     public class MatchmakingManager : Singleton<MatchmakingManager>, IInRoomCallbacks, IMatchmakingCallbacks
     {

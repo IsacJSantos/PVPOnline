@@ -1,11 +1,11 @@
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
-using OnlyOneGameDev.Utils;
-using OnlyOneGameDev.Network;
+using BraveHunter.Utils;
+using BraveHunter.Network;
 
 
-namespace OnlyOneGameDev.Lobby
+namespace BraveHunter.Lobby
 {
     public class LobbyManager : MonoBehaviour
     {

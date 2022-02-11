@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace OnlyOneGameDev.Utils
+namespace BraveHunter.Utils
 {
     public class Singleton<T> : MonoBehaviour
     {

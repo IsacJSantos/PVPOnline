@@ -1,9 +1,9 @@
 using UnityEngine.UI;
 using UnityEngine;
 using Photon.Pun;
-using OnlyOneGameDev.Utils;
+using BraveHunter.Utils;
 
-namespace OnlyOneGameDev.Lobby
+namespace BraveHunter.Lobby
 {
     public class StartMatchButton : MonoBehaviour
     {
