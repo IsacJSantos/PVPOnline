@@ -14,11 +14,20 @@ namespace BraveHunter.Utils
         public static SimpleEvent OnStartMatch;
         #endregion
 
+        #region Inventory
+        public static ItemDataEvent OnItemView;
+        public static ItemDataEvent OnItemOutOfView;
+
+        public static ItemDataEvent OnItemCollect;
+        #endregion
+
 
 
         public delegate void SimpleEvent();
         public delegate void IntEvent(int i);
         public delegate void StringEvent(string s);
+
+        public delegate void ItemDataEvent(ItemData td);
     }
 }
 

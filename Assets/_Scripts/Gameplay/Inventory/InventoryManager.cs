@@ -1,4 +1,6 @@
 using UnityEngine;
+using BraveHunter.Utils;
+
 namespace BraveHunter.Gameplay 
 {
     public class InventoryManager : MonoBehaviour
@@ -7,6 +9,17 @@ namespace BraveHunter.Gameplay
         public ItemData tempItemSelected2;
         public Slot[] Slots;
 
+        private void Awake()
+        {
+            Events.OnItemCollect += AddItemToInventory;
+        }
+
+        private void OnDestroy()
+        {
+            Events.OnItemCollect -= AddItemToInventory;
+        }
+
+        #region Private Methods
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.K))
@@ -29,6 +42,8 @@ namespace BraveHunter.Gameplay
                 if (Slots[i].EnterItem(itemData)) break;
             }
         }
+        #endregion
+
     }
 }
 
