@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace BraveHunter.Utils
 {
     public class Events
@@ -15,10 +17,12 @@ namespace BraveHunter.Utils
         #endregion
 
         #region Inventory
-        public static ItemDataEvent OnItemView;
-        public static ItemDataEvent OnItemOutOfView;
+        public static ItemDataGameObjectEvent OnItemView;
+        public static ItemDataGameObjectEvent OnItemOutOfView;
 
-        public static ItemDataEvent OnItemCollect;
+        public static ItemDataGameObjectEvent OnItemCollect;
+
+        public static ItemDataGameObjectEvent OnConfirmItemCollect;
         #endregion
 
 
@@ -28,6 +32,7 @@ namespace BraveHunter.Utils
         public delegate void StringEvent(string s);
 
         public delegate void ItemDataEvent(ItemData td);
+        public delegate void ItemDataGameObjectEvent(ItemData td, GameObject go);
     }
 }
 

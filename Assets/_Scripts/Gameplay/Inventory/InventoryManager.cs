@@ -1,7 +1,7 @@
 using UnityEngine;
 using BraveHunter.Utils;
 
-namespace BraveHunter.Gameplay 
+namespace BraveHunter.Gameplay
 {
     public class InventoryManager : MonoBehaviour
     {
@@ -20,27 +20,25 @@ namespace BraveHunter.Gameplay
         }
 
         #region Private Methods
-        private void Update()
+
+        void AddItemToInventory(ItemData itemData, GameObject go)
         {
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-
-                AddItemToInventory(tempItemSelected);
-            }
-            else if (Input.GetKeyDown(KeyCode.J))
-            {
-
-                AddItemToInventory(tempItemSelected2);
-            }
-        }
-
-        void AddItemToInventory(ItemData itemData)
-        {
-
+            bool collected = false;
             for (int i = 0; i < Slots.Length; i++)
             {
-                if (Slots[i].EnterItem(itemData)) break;
+                if (Slots[i].EnterItem(itemData))
+                {
+                    go.SetActive(false);
+                    go.transform.position = new Vector3(10000, 10000, 10000);
+                    collected = true;
+                    break;
+                }
+
             }
+
+            if (collected) Events.OnConfirmItemCollect?.Invoke(itemData, go);
+            else
+                Debug.LogWarning("Inventory is full");
         }
         #endregion
 

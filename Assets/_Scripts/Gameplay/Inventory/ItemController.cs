@@ -1,9 +1,9 @@
 using BraveHunter.Utils;
 using UnityEngine;
 
-namespace BraveHunter.Gameplay 
+namespace BraveHunter.Gameplay
 {
-    
+
     public class ItemController : MonoBehaviour
     {
         Collider _itemCollectArea;
@@ -18,14 +18,14 @@ namespace BraveHunter.Gameplay
         {
             if (other.gameObject.tag == "Player")
             {
-                Events.OnItemView?.Invoke(ItemData);
+                Events.OnItemView?.Invoke(ItemData, gameObject);
             }
         }
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.tag == "Player")
             {
-                Events.OnItemOutOfView?.Invoke(ItemData);
+                Events.OnItemOutOfView?.Invoke(ItemData, gameObject);
             }
 
         }
