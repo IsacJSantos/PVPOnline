@@ -1,9 +1,9 @@
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using OnlyOneGameDev.Utils;
+using BraveHunter.Utils;
 
-namespace OnlyOneGameDev.Network
+namespace BraveHunter.Network
 {
     public class Launcher : MonoBehaviourPunCallbacks
     {

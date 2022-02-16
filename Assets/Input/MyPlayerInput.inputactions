@@ -83,6 +83,54 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "HUDController",
+            "id": "e66428ef-8ccd-454c-a248-5e3467df034e",
+            "actions": [
+                {
+                    "name": "ToggleInventory",
+                    "type": "Button",
+                    "id": "932eab82-73f5-4464-91e9-606089a7a801",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CollectItem",
+                    "type": "Button",
+                    "id": "53c86c64-63b1-4616-b272-da8836ecfdba",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c06aeedd-b030-4c3f-8580-4a6e07aa7388",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "13327a80-f1a3-42a9-ad7b-b0c490b1d283",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CollectItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

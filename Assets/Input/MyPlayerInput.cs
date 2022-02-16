@@ -105,6 +105,54 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""HUDController"",
+            ""id"": ""e66428ef-8ccd-454c-a248-5e3467df034e"",
+            ""actions"": [
+                {
+                    ""name"": ""ToggleInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""932eab82-73f5-4464-91e9-606089a7a801"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CollectItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""53c86c64-63b1-4616-b272-da8836ecfdba"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c06aeedd-b030-4c3f-8580-4a6e07aa7388"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""13327a80-f1a3-42a9-ad7b-b0c490b1d283"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CollectItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -112,6 +160,10 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
         // CharacterController
         m_CharacterController = asset.FindActionMap("CharacterController", throwIfNotFound: true);
         m_CharacterController_Move = m_CharacterController.FindAction("Move", throwIfNotFound: true);
+        // HUDController
+        m_HUDController = asset.FindActionMap("HUDController", throwIfNotFound: true);
+        m_HUDController_ToggleInventory = m_HUDController.FindAction("ToggleInventory", throwIfNotFound: true);
+        m_HUDController_CollectItem = m_HUDController.FindAction("CollectItem", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -200,8 +252,54 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public CharacterControllerActions @CharacterController => new CharacterControllerActions(this);
+
+    // HUDController
+    private readonly InputActionMap m_HUDController;
+    private IHUDControllerActions m_HUDControllerActionsCallbackInterface;
+    private readonly InputAction m_HUDController_ToggleInventory;
+    private readonly InputAction m_HUDController_CollectItem;
+    public struct HUDControllerActions
+    {
+        private @MyPlayerInput m_Wrapper;
+        public HUDControllerActions(@MyPlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ToggleInventory => m_Wrapper.m_HUDController_ToggleInventory;
+        public InputAction @CollectItem => m_Wrapper.m_HUDController_CollectItem;
+        public InputActionMap Get() { return m_Wrapper.m_HUDController; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(HUDControllerActions set) { return set.Get(); }
+        public void SetCallbacks(IHUDControllerActions instance)
+        {
+            if (m_Wrapper.m_HUDControllerActionsCallbackInterface != null)
+            {
+                @ToggleInventory.started -= m_Wrapper.m_HUDControllerActionsCallbackInterface.OnToggleInventory;
+                @ToggleInventory.performed -= m_Wrapper.m_HUDControllerActionsCallbackInterface.OnToggleInventory;
+                @ToggleInventory.canceled -= m_Wrapper.m_HUDControllerActionsCallbackInterface.OnToggleInventory;
+                @CollectItem.started -= m_Wrapper.m_HUDControllerActionsCallbackInterface.OnCollectItem;
+                @CollectItem.performed -= m_Wrapper.m_HUDControllerActionsCallbackInterface.OnCollectItem;
+                @CollectItem.canceled -= m_Wrapper.m_HUDControllerActionsCallbackInterface.OnCollectItem;
+            }
+            m_Wrapper.m_HUDControllerActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @ToggleInventory.started += instance.OnToggleInventory;
+                @ToggleInventory.performed += instance.OnToggleInventory;
+                @ToggleInventory.canceled += instance.OnToggleInventory;
+                @CollectItem.started += instance.OnCollectItem;
+                @CollectItem.performed += instance.OnCollectItem;
+                @CollectItem.canceled += instance.OnCollectItem;
+            }
+        }
+    }
+    public HUDControllerActions @HUDController => new HUDControllerActions(this);
     public interface ICharacterControllerActions
     {
         void OnMove(InputAction.CallbackContext context);
+    }
+    public interface IHUDControllerActions
+    {
+        void OnToggleInventory(InputAction.CallbackContext context);
+        void OnCollectItem(InputAction.CallbackContext context);
     }
 }

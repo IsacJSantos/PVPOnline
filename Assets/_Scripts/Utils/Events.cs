@@ -1,4 +1,6 @@
-namespace OnlyOneGameDev.Utils
+using UnityEngine;
+
+namespace BraveHunter.Utils
 {
     public class Events
     {
@@ -14,11 +16,23 @@ namespace OnlyOneGameDev.Utils
         public static SimpleEvent OnStartMatch;
         #endregion
 
+        #region Inventory
+        public static ItemDataGameObjectEvent OnItemView;
+        public static ItemDataGameObjectEvent OnItemOutOfView;
+
+        public static ItemDataGameObjectEvent OnItemCollect;
+
+        public static ItemDataGameObjectEvent OnConfirmItemCollect;
+        #endregion
+
 
 
         public delegate void SimpleEvent();
         public delegate void IntEvent(int i);
         public delegate void StringEvent(string s);
+
+        public delegate void ItemDataEvent(ItemData td);
+        public delegate void ItemDataGameObjectEvent(ItemData td, GameObject go);
     }
 }
 

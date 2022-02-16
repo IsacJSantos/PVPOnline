@@ -1,7 +1,7 @@
-using OnlyOneGameDev.Network;
+using BraveHunter.Network;
 using UnityEngine;
 
-namespace OnlyOneGameDev.Gameplay
+namespace BraveHunter.Gameplay
 {
     public class HUDManager : MonoBehaviour
     {
