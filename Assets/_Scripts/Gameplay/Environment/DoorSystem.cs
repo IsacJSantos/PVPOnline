@@ -3,28 +3,23 @@ using UnityEngine;
 
 namespace BraveHunter.Gameplay
 {
-    public class DoorSystem : MonoBehaviour
+    public class DoorSystem : MonoBehaviour, IInteractable
     {
         [SerializeField] Animation _anim;
 
         bool _isOpen;
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                ToggleDoor();
-            }
-        }
-
         #region Public Methods
-
+        public void Interact()
+        {
+            ToggleDoor();
+        }
         #endregion
 
         #region Private Methods
         void ToggleDoor()
         {
-            if (_anim.IsPlaying("Closing") || _anim.IsPlaying("Opening")) { Debug.Log("Isplaying...");  return; }
+            if (_anim.IsPlaying("Closing") || _anim.IsPlaying("Opening")) { Debug.Log("Isplaying..."); return; }
 
             if (_isOpen)
                 _anim.Play("Closing");
@@ -34,6 +29,8 @@ namespace BraveHunter.Gameplay
             _isOpen = !_isOpen;
         }
         #endregion
-
+      
     }
+
+
 }

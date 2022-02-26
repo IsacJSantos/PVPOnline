@@ -35,6 +35,15 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": ""NormalizeVector2"",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""9c002476-92d3-4d06-890e-635f79a30d97"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -103,6 +112,17 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6dbeb9f8-7b76-463e-a703-c26c68179285"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -160,6 +180,7 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
         // CharacterController
         m_CharacterController = asset.FindActionMap("CharacterController", throwIfNotFound: true);
         m_CharacterController_Move = m_CharacterController.FindAction("Move", throwIfNotFound: true);
+        m_CharacterController_Interact = m_CharacterController.FindAction("Interact", throwIfNotFound: true);
         // HUDController
         m_HUDController = asset.FindActionMap("HUDController", throwIfNotFound: true);
         m_HUDController_ToggleInventory = m_HUDController.FindAction("ToggleInventory", throwIfNotFound: true);
@@ -224,11 +245,13 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_CharacterController;
     private ICharacterControllerActions m_CharacterControllerActionsCallbackInterface;
     private readonly InputAction m_CharacterController_Move;
+    private readonly InputAction m_CharacterController_Interact;
     public struct CharacterControllerActions
     {
         private @MyPlayerInput m_Wrapper;
         public CharacterControllerActions(@MyPlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_CharacterController_Move;
+        public InputAction @Interact => m_Wrapper.m_CharacterController_Interact;
         public InputActionMap Get() { return m_Wrapper.m_CharacterController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -241,6 +264,9 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
                 @Move.started -= m_Wrapper.m_CharacterControllerActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_CharacterControllerActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_CharacterControllerActionsCallbackInterface.OnMove;
+                @Interact.started -= m_Wrapper.m_CharacterControllerActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_CharacterControllerActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_CharacterControllerActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_CharacterControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -248,6 +274,9 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -296,6 +325,7 @@ public partial class @MyPlayerInput : IInputActionCollection2, IDisposable
     public interface ICharacterControllerActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface IHUDControllerActions
     {
